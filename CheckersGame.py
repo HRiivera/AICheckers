@@ -24,7 +24,7 @@ class CheckersGame(Game):
         player = state.to_move
         moves = state.moves
 
-        if len(moves) == 1:
+        if len(moves) == 1:  # Not too sure about this
             return moves
 
         legal_moves = []
@@ -36,8 +36,16 @@ class CheckersGame(Game):
 
     def result(self, state, move):
         board = copy.deepcopy(state.board)
+        player = state.to_move
+        self.move_checker(board=board, start=move[0], dest=move[1])
+        player = ("R" if player == "B" else "B")
+        return GameState(to_move=player, utility=self.compute_utility(board, move, player),
+                         board=board, moves=self.get_all_moves(board, player))
 
     def utility(self, state, player):
+        pass
+
+    def compute_utility(self, board, move, player):
         pass
 
     def get_all_moves(self, board, player):
@@ -45,10 +53,8 @@ class CheckersGame(Game):
 
     def is_legal_move(self, board, start, dest, player):
 
-        start_x = start[0]
-        start_y = start[1]
-        dest_x = dest[0]
-        dest_y = dest[1]
+        start_x, start_y = start[0], start[1]
+        dest_x, dest_y = dest[0], dest[1]
 
         piece = board[start_y][start_x]
         dist = abs(start_x - dest_x)
@@ -108,11 +114,22 @@ class CheckersGame(Game):
 
         return False
 
-    def move_checker(self, board, start, dest, player):
+    def move_checker(self, board, start, dest):
 
-        piece = board[start[0]][start[1]]
+        start_x, start_y = start[0], start[1]
+        dest_x, dest_y = dest[0], dest[1]
 
-        board[start[0]][start[1]] = "E"
+        piece = board[start_y][start_x]
+        dist = abs(start_x - dest_x)
 
-        if abs(start[0] - dest[0]) == 2:
-            pass
+        board[start_y][start_x] = "E"
+
+        if dist == 1:
+            board[dest_y][dest_x] = piece
+        elif dist == 2:
+            board[dest_y][dest_x] = piece
+            board[(start_y+dest_y)//2][(start_x+dest_x)//2] = "E"
+
+    def display(self, state):
+        for i in range(len(state.board)):
+            print(state.board[i])
