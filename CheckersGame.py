@@ -96,7 +96,7 @@ class CheckersGame(Game):
         elif piece == "R" and dist == 2:
             if dest_y == start_y + 2 and dest_x == start_x - 2 and board[start_y + 1][start_x - 1] in ["B", "BK"]:
                 return True
-            elif dest_y == start_y - 2 and dest_x == start_x + 2 and board[start_y + 1][start_x + 1] in ["R", "RK"]:
+            elif dest_y == start_y + 2 and dest_x == start_x + 2 and board[start_y + 1][start_x + 1] in ["B", "BK"]:
                 return True
             else:
                 return False
@@ -129,6 +129,10 @@ class CheckersGame(Game):
         elif dist == 2:
             board[dest_y][dest_x] = piece
             board[(start_y+dest_y)//2][(start_x+dest_x)//2] = "E"
+        if piece == "B" and dest_y == 0:
+            board[dest_y][dest_x] = "BK"
+        elif piece == "R" and dest_y == 7:
+            board[dest_y][dest_x] = "RK"
 
     def display(self, state):
         for i in range(len(state.board)):

@@ -25,12 +25,18 @@ class GUI:
         checkerboard = os.path.join(dir, 'images', 'checkerboard.png')
         red_circle = os.path.join(dir, 'images', 'red_circle.png')
         black_circle = os.path.join(dir, 'images', 'black_circle.png')
+        red_king = os.path.join(dir, 'images', 'red_king.png')
+        black_king = os.path.join(dir, 'images', 'black_king.png')
         checkerboard = Image.open(checkerboard).resize((self.tile_size * 8, self.tile_size * 8), Image.ANTIALIAS)
         self.checkerboard = ImageTk.PhotoImage(checkerboard)
         red_circle = Image.open(red_circle).resize((self.tile_size, self.tile_size), Image.ANTIALIAS)
         self.red_circle = ImageTk.PhotoImage(red_circle)
         black_circle = Image.open(black_circle).resize((self.tile_size, self.tile_size), Image.ANTIALIAS)
         self.black_circle = ImageTk.PhotoImage(black_circle)
+        red_king = Image.open(red_king).resize((self.tile_size, self.tile_size), Image.ANTIALIAS)
+        self.red_king = ImageTk.PhotoImage(red_king)
+        black_king = Image.open(black_king).resize((self.tile_size, self.tile_size), Image.ANTIALIAS)
+        self.black_king = ImageTk.PhotoImage(black_king)
 
         self.cg = CheckersGame()
         self.state = self.cg.initial
@@ -63,8 +69,6 @@ class GUI:
             self.first_click = not self.first_click
             self.draw(self.canvas, self.state)
 
-
-
         self.root.bind('<Button-1>', mouseclick)
 
         tk.mainloop()
@@ -79,10 +83,12 @@ class GUI:
                 if state.board[i][j] == "B":
                     image = self.black_circle
                 elif state.board[i][j] == "BK":
-                    image=self.black_circle
+                    image = self.black_king
                 elif state.board[i][j] == "R":
-                    image=self.red_circle
+                    image = self.red_circle
                 elif state.board[i][j] == "RK":
-                    image=self.redcircle
+                    image = self.red_king
                 canvas.create_image(j*self.tile_size, i*self.tile_size, image=image, anchor=tk.NW)
+
+
 GUI()
