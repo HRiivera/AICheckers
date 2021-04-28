@@ -43,8 +43,8 @@ class CheckersGame(Game):
                          board=board, moves=self.get_all_moves(board, player))
 
     def utility(self, state, player):
-    """Returns 1 if Red wins, -1 if Black wins or 0 if otherwise"""
-       return state.utility if player == 'R' else -state.utility
+        """Returns 1 if Red wins, -1 if Black wins or 0 if otherwise"""
+        return state.utility if player == 'R' else -state.utility
 
     def compute_utility(self, board, move, player):
         """Returns 1 if Red wins move, -1 if Black 
