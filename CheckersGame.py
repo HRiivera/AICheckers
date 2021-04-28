@@ -39,17 +39,42 @@ class CheckersGame(Game):
         player = state.to_move
         self.move_checker(board=board, start=move[0], dest=move[1])
         player = ("R" if player == "B" else "B")
-        return GameState(to_move=player, utility=self.compute_utility(board, move, player),
+        return GameState(to_move=player, utility=self.compute_utility(state.board, move, player),
                          board=board, moves=self.get_all_moves(board, player))
 
     def utility(self, state, player):
-        pass
+    "Returns 1 if Red wins, -1 if Black wins or 0 if otherwise"
+       return state.utility if player == 'R' else -state.utility
 
     def compute_utility(self, board, move, player):
-        pass
+        """Returns 1 if Red wins move, -1 if Black 
+        wins move or 0 if otherwise"""
+        r_Alive = 0
+        b_Alive = 0
+        for line in range(8):
+            for col in range(8):
+                if board[line][col].is("R"):
+                    r_Alive += 1
+                elif board[line][col].is("B"):
+                    b_Alive += 1
+        if r_Alive > b_Alive:
+            if b_Alive == 0:
+                return 1
+            else return 0
+        elif r_Alive == 0:
+            return -1
 
     def get_all_moves(self, board, player):
-        pass
+        """Returns all possible moves"""
+        result = []
+        for startx in range(8):
+            for starty in range(8):
+                for destx in range(8):
+                    for desty range(8):
+                        if self.is_legal_move(board, [startx, starty], [destx, desty], player):
+                            result += [[startx, starty], [destx, desty]]
+        return result
+                            
 
     def is_legal_move(self, board, start, dest, player):
 
