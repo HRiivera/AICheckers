@@ -1,3 +1,5 @@
+import numpy as np
+
 from Game import Game
 import copy
 from collections import namedtuple

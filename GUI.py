@@ -1,4 +1,5 @@
 import tkinter as tk
+from time import *
 from PIL import ImageTk, Image
 import os
 from CheckersGame import CheckersGame
@@ -64,9 +65,10 @@ class GUI:
             if not self.first_click:
                 self.first_click_pos = [tile_x, tile_y]
             elif self.cg.is_legal_move(self.state.board, self.first_click_pos, [tile_x, tile_y], "B"):
-                self.state = self.cg.result(self.state, [self.first_click_pos, [tile_x, tile_y]])
+                # move = alpha_beta_cutoff_search(self.state, self.cg, d=4)
+                self.state = self.cg.result(self.state, [self.first_click_pos, [tile_x, tile_y]]) # change this to move
                 self.draw(self.canvas, self.state)
-                move = alpha_beta_cutoff_search(self.state, self.cg)
+                move = alpha_beta_cutoff_search(self.state, self.cg, d=4)
                 self.state = self.cg.result(self.state, move)
             self.first_click = not self.first_click
             self.draw(self.canvas, self.state)
