@@ -41,18 +41,18 @@ class CheckersGame(Game):
         player = state.to_move
         self.move_checker(board=board, start=move[0], dest=move[1])
         player = ("R" if player == "B" else "B")
-        return GameState(to_move=player, utility=self.compute_utility(state.board, move, player),
+        return GameState(to_move=player, utility=self.compute_utility(board, move, player),
                          board=board, moves=self.get_all_moves(board, player))
 
     def utility(self, state, player):
         """Returns 1 if Red wins, -1 if Black wins or 0 if otherwise"""
-        return state.utility if player == 'R' else -state.utility
+        return state.utility
 
     def terminal_test(self, state):
         """A state is terminal if one player wins."""
         if state.moves:
             return 0
-        return np.inf if state.player == "B" else -np.inf
+        return np.inf if state.to_move == "B" else -np.inf
 
     def compute_utility(self, board, move, player):
         """Returns 1 if Red wins move, -1 if Black 
@@ -79,7 +79,7 @@ class CheckersGame(Game):
         #     return -1
         powkings = 1.2
         result = 0
-        if player == 'R':
+        if player == 'B':
             result = rk_alive*powkings + r_alive - bk_alive*powkings - b_alive
         else:
             result = bk_alive*powkings + b_alive - rk_alive*powkings - r_alive

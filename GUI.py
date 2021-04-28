@@ -68,7 +68,7 @@ class GUI:
             elif self.cg.is_legal_move(self.state.board, self.first_click_pos, [tile_x, tile_y], "B"):
                 # move = alpha_beta_cutoff_search(self.state, self.cg, d=4)
                 self.state = self.cg.result(self.state, [self.first_click_pos, [tile_x, tile_y]]) # change this to move
-                self.draw(self.canvas, self.state)
+
                 time = t.time()
                 move = alpha_beta_cutoff_search(self.state, self.cg, d=4)
                 print("Time taken: ", t.time() - time, " s")

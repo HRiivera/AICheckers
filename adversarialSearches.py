@@ -124,4 +124,5 @@ def alpha_beta_cutoff_search(state, game, d=4, cutoff_test=None, eval_fn=None):
         if v > best_score:
             best_score = v
             best_action = a
+    print("Chose move:", best_action, "with Score: ", best_score)
     return best_action
