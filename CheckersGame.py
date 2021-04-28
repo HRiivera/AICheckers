@@ -43,8 +43,12 @@ class CheckersGame(Game):
                          board=board, moves=self.get_all_moves(board, player))
 
     def utility(self, state, player):
-    """Returns 1 if Red wins, -1 if Black wins or 0 if otherwise"""
-       return state.utility if player == 'R' else -state.utility
+        """Returns 1 if Red wins, -1 if Black wins or 0 if otherwise"""
+        return state.utility if player == 'R' else -state.utility
+
+    def terminal_test(self, state):
+        """A state is terminal if one player wins."""
+        return state.utility != 0
 
     def compute_utility(self, board, move, player):
         """Returns 1 if Red wins move, -1 if Black 
@@ -53,14 +57,14 @@ class CheckersGame(Game):
         b_Alive = 0
         for line in range(8):
             for col in range(8):
-                if board[line][col].is("R"):
+                if board[line][col] == "R":
                     r_Alive += 1
-                elif board[line][col].is("B"):
+                elif board[line][col] == "B":
                     b_Alive += 1
         if r_Alive > b_Alive:
             if b_Alive == 0:
                 return 1
-            else return 0
+            else: return 0
         elif r_Alive == 0:
             return -1
 
@@ -70,9 +74,9 @@ class CheckersGame(Game):
         for startx in range(8):
             for starty in range(8):
                 for destx in range(8):
-                    for desty range(8):
+                    for desty in range(8):
                         if self.is_legal_move(board, [startx, starty], [destx, desty], player):
-                            result += [[startx, starty], [destx, desty]]
+                            result.append([[startx, starty], [destx, desty]])
         return result
                             
 
