@@ -1,5 +1,6 @@
 import tkinter as tk
-from time import *
+from datetime import datetime
+import time as t
 from PIL import ImageTk, Image
 import os
 from CheckersGame import CheckersGame
@@ -68,7 +69,9 @@ class GUI:
                 # move = alpha_beta_cutoff_search(self.state, self.cg, d=4)
                 self.state = self.cg.result(self.state, [self.first_click_pos, [tile_x, tile_y]]) # change this to move
                 self.draw(self.canvas, self.state)
+                time = t.time()
                 move = alpha_beta_cutoff_search(self.state, self.cg, d=4)
+                print("Time taken: ", t.time() - time, " s")
                 self.state = self.cg.result(self.state, move)
             self.first_click = not self.first_click
             self.draw(self.canvas, self.state)
