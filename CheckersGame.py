@@ -48,25 +48,40 @@ class CheckersGame(Game):
 
     def terminal_test(self, state):
         """A state is terminal if one player wins."""
-        return state.utility != 0
+        if state.moves:
+            return 0
+        return np.inf if state.player == "B" else -np.inf
 
     def compute_utility(self, board, move, player):
         """Returns 1 if Red wins move, -1 if Black 
         wins move or 0 if otherwise"""
-        r_Alive = 0
-        b_Alive = 0
+        r_alive = 0
+        b_alive = 0
+        rk_alive = 0
+        bk_alive = 0
         for line in range(8):
             for col in range(8):
                 if board[line][col] == "R":
-                    r_Alive += 1
+                    r_alive += 1
                 elif board[line][col] == "B":
-                    b_Alive += 1
-        if r_Alive > b_Alive:
-            if b_Alive == 0:
-                return 1
-            else: return 0
-        elif r_Alive == 0:
-            return -1
+                    b_alive += 1
+                elif board[line][col] == "RK":
+                    rk_alive += 1
+                elif board[line][col] == "BK":
+                    bk_alive += 1
+        # if r_Alive > b_Alive:
+        #     if b_Alive == 0:
+        #         return 1
+        #     else: return 0
+        # elif r_Alive == 0:
+        #     return -1
+        powkings = 1.2
+        result = 0
+        if player == 'R':
+            result = rk_alive*powkings + r_alive - bk_alive*powkings - b_alive
+        else:
+            result = bk_alive*powkings + b_alive - rk_alive*powkings - r_alive
+        return result
 
     def get_all_moves(self, board, player):
         """Returns all possible moves"""
