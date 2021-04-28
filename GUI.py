@@ -65,6 +65,7 @@ class GUI:
                 self.first_click_pos = [tile_x, tile_y]
             elif self.cg.is_legal_move(self.state.board, self.first_click_pos, [tile_x, tile_y], "B"):
                 self.state = self.cg.result(self.state, [self.first_click_pos, [tile_x, tile_y]])
+                self.draw(self.canvas, self.state)
                 move = alpha_beta_cutoff_search(self.state, self.cg)
                 self.state = self.cg.result(self.state, move)
             self.first_click = not self.first_click

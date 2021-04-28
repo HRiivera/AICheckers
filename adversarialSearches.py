@@ -11,31 +11,36 @@ import numpy as np
  implementation of algorithms from Russell And Norvig's 
  "Artificial Intelligence - A Modern Approach"""
 
-def minmax_decision(state, game):
+def minmax_decision(state, game, depth=4):
     """Given a state in a game, calculate the best move by searching
     forward all the way to the terminal states. [Figure 5.3]"""
 
     player = game.to_move(state)
 
-    def max_value(state):
-        print("a")
+    def max_value(state, depth):
+        print(depth)
         if game.terminal_test(state):
+            return game.utility(state, player)
+        if depth == 0:
             return game.utility(state, player)
         v = -np.inf
         for a in game.actions(state):
-            v = max(v, min_value(game.result(state, a)))
+            v = max(v, min_value(game.result(state, a), depth-1))
         return v
 
-    def min_value(state):
+    def min_value(state, depth):
+        print(depth)
         if game.terminal_test(state):
+            return game.utility(state, player)
+        if depth == 0:
             return game.utility(state, player)
         v = np.inf
         for a in game.actions(state):
-            v = min(v, max_value(game.result(state, a)))
+            v = min(v, max_value(game.result(state, a), depth-1))
         return v
 
     # Body of minmax_decision:
-    return max(game.actions(state), key=lambda a: min_value(game.result(state, a)))
+    return max(game.actions(state), key=lambda a: min_value(game.result(state, a), depth))
 
 
 def alpha_beta_search(state, game):
