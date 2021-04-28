@@ -18,7 +18,7 @@ def minmax_decision(state, game, depth=4):
     player = game.to_move(state)
 
     def max_value(state, depth):
-        print(depth)
+        # print(depth)
         if game.terminal_test(state):
             return game.utility(state, player)
         if depth == 0:
@@ -29,7 +29,7 @@ def minmax_decision(state, game, depth=4):
         return v
 
     def min_value(state, depth):
-        print(depth)
+        # print(depth)
         if game.terminal_test(state):
             return game.utility(state, player)
         if depth == 0:
