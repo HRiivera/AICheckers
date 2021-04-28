@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import os
 from CheckersGame import CheckersGame
+from adversarialSearches import *
 
 dir = os.path.dirname(__file__)
 
@@ -58,8 +59,7 @@ class GUI:
                 self.first_click_pos = [tile_x, tile_y]
             elif self.cg.is_legal_move(self.state.board, self.first_click_pos, [tile_x, tile_y], "B"):
                 self.state = self.cg.result(self.state, [self.first_click_pos, [tile_x, tile_y]])
-            elif self.cg.is_legal_move(self.state.board, self.first_click_pos, [tile_x, tile_y], "R"):
-                self.state = self.cg.result(self.state, [self.first_click_pos, [tile_x, tile_y]])
+                self.state = minmax_decision(self.state, self.cg)
             self.first_click = not self.first_click
             self.draw(self.canvas, self.state)
 
