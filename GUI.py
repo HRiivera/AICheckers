@@ -71,8 +71,8 @@ class GUI:
                 self.state = self.cg.result(self.state, [self.first_click_pos, [tile_x, tile_y]])# <-change last paramenter to move for AI v AI
 
                 time = t.time()
-                # move = alpha_beta_cutoff_search(self.state, self.cg, d=4) #AI using A-B Cutoff
-                move = minmax_decision(self.state, self.cg, depth=2)  # AI using Minimax
+                move = alpha_beta_cutoff_search(self.state, self.cg, d=4) #AI using A-B Cutoff
+                # move = minmax_decision(self.state, self.cg, depth=2)  # AI using Minimax
                 print("Time taken: ", t.time() - time, " s")
                 self.state = self.cg.result(self.state, move)# [self.first_click_pos, [tile_x, tile_y]]) <- Uncomment this and block comment 'move' for Human v Human
             self.first_click = not self.first_click
